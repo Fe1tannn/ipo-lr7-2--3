@@ -1,17 +1,18 @@
 import json
 with open("dota.json", 'r', encoding='utf-8') as file: 
     flower_data = json.load(file) 
-count = 0
-while True:
-    print("""
-       1: Вывести все записи n
-       2: Вывести запись по полю n
-       3: Добавить запись n
-       4: Удалить запись по полю n
-       5: Выйти из программы
-    """)    
-    char = int(input("Введите номер действия, которое вы хотите выполнить: "))
-    if  char == 1:
+    count = 0
+    close = True
+    def menu():
+        print("""
+        1: Вывести все записи n
+        2: Вывести запись по полю n
+        3: Добавить запись n
+        4: Удалить запись по полю n
+        5: Выйти из программы
+        """)    
+    def out_all():
+        global count
         for flower in flower_data:
             print(f"""
                 Код: {flower['id']}, 
@@ -21,7 +22,8 @@ while True:
                 Стоимость: {flower['price']} 
                 """)
             count += 1
-    elif char == 2:
+    def out_index():
+        global count
         id_num = int(input("Введите номер цветка: "))
         bools = False  
         i = 0  
@@ -40,7 +42,8 @@ while True:
         count += 1
         if not bools:
             print("Запись не найдена.")
-    elif char == 3:
+    def input_new():
+        global count
         ids = int(input("Введите номер цветка: "))     
         exists = False
         for flower in flower_data:
@@ -67,7 +70,8 @@ while True:
                 json.dump(flower_data, output_file, ensure_ascii = False, indent = 2)
             print("Цветок успешно добавлена.")
         count += 1
-    elif char == 4:
+    def del_id():
+            global count
             id_del = int(input("Введите номер цветка: "))
             bools = False  
             for flower in flower_data:
@@ -82,8 +86,25 @@ while True:
                     json.dump(flower_data, output_file, ensure_ascii = False, indent = 2)
                 print("цветок успешно удалена.")
             count += 1
-    elif char == 5:
-            print(f"Программа завершена. Количество выполненных операций с записями равно: {count}")
-            break
-    else:
-        print("Некорректный ввод. Пожалуйста, выберите номер от 1 до 5.")
+    def leave():
+        global count
+        global close
+        print(f"Программа завершена. Количество выполненных операций с записями равно: {count}")
+        close = False 
+def main():
+    while close:
+        menu()
+        point = int(input("Введите номер действия, которое хотите выполнить: "))
+        if point == 1:
+            out_all()
+        elif point == 2:
+            out_index()
+        elif point == 3:
+            input_new()
+        elif point == 4:
+           del_id()
+        elif point == 5:
+            leave()
+        else:
+            print("Некорректный ввод. Пожалуйста, выберите номер от 1 до 5.")
+main()      
