@@ -8,8 +8,8 @@
   },
   {
     "id": 2,
-    "name": "Лада Веста",
-    "latin_name": "Орхидея",
+    "name": "Орхидея",
+    "latin_name": "Orchidaceae",
     "is_red_book_flower": true,
     "price": 25
   },
